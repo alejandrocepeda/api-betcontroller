@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\User;
 
-use App\Http\Resources\UsersResource;
-use App\Http\Resources\UsersColletion;
-
 class UserController extends ApiController
 {
     
@@ -20,7 +17,7 @@ class UserController extends ApiController
     public function index()
     {
         $users = User::all();
-        return new UsersColletion($users);
+        return $this->showAll($users);
     }
 
     /**
@@ -42,24 +39,19 @@ class UserController extends ApiController
     public function register(Request $request)
     {
         $rules = ['name'        => 'required',
-                  'password'    => 'required',
-                  'email'       => 'required|email|unique:users', ];
+                  'password'    => 'required|min:6',
+                  'email'       => 'required|email|unique:users',
+                ];
 
         $this->validate($request, $rules);
 
         $request['password'] = bcrypt($request['password']);
         
+        $user   = User::create($request->all());
+        $token  =  $user->createToken('MyApp')->accessToken;
+        $user['token'] = $token;
 
-        $user = User::create($request->all());
-        $success['token'] =  $user->createToken('MyApp')->accessToken;
-
-        //return $this->successResponse(['data'=>$user, 'message'=>'User Created'], 201);
-
-        return response()->json([
-            'data'      => $user,
-            'token'     => $success['token'],
-            'message'   => 'User Created',
-        ]);
+        return $this->successResponse(['data'=> $user, 'message'=>'User Created'], 201);
     }
 
 

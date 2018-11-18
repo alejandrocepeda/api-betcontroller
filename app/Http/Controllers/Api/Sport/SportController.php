@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Api\Sport;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Sport;
 
-use App\Http\Resources\SportsResource;
-use App\Http\Resources\SportsColletion;
-
-class SportController extends Controller
+class SportController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +18,7 @@ class SportController extends Controller
     {
         //
         $sports = Sport::all();
-        return new SportsColletion($sports);
+        return $this->showAll($sports);
     }
 
     /**
@@ -52,12 +49,7 @@ class SportController extends Controller
 
         $sport = Sport::create($request->all());
 
-        return response()->json([
-            'data'      => $sport,
-            'message'   => 'Sport Created',
-        ]);
-
-        //return $this->successResponse(['data'=> $sport, 'message'=>'Sport Created'], 201);
+        return $this->successResponse(['data'=> $sport, 'message' => 'Sport Created'], 201);
     }
 
     /**
@@ -70,7 +62,8 @@ class SportController extends Controller
     {
         //
         $sports = Sport::find($id);
-        return new SportsResource($sports);
+
+        return $this->showOne($sports);
     }
 
     /**

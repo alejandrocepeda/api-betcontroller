@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Event;
 
-use App\Http\Resources\EventsResource;
-use App\Http\Resources\EventsColletion;
-
 class EventController extends ApiController
 {
     /**
@@ -19,10 +16,9 @@ class EventController extends ApiController
     public function index()
     {
         //
-        $data = Event::all();
+        $events = Event::all();
 
-        return new EventsColletion($data);
-        
+        return $this->showAll($events);
     }
 
     /**
