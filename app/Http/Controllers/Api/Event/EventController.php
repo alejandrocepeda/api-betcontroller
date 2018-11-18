@@ -51,6 +51,10 @@ class EventController extends ApiController
     public function show($id)
     {
         //
+
+        $event = Event::findOrFail($id);
+
+        return $this->showOne($event);
     }
 
     /**

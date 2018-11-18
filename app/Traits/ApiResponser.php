@@ -16,11 +16,11 @@ trait ApiResponser{
     }
 
     protected function showAll(Collection $collection,$code = 200){
-        return $this->successResponse(['1data' => $collection],$code);
+        return $this->successResponse(['data' => $collection],$code);
     }
 
     public function showOne(Model $model,$code = 200){
-        return $this->successResponse(['1data' => $model],$code);
+        return $this->successResponse(['data' => $model],$code);
     }
 
 

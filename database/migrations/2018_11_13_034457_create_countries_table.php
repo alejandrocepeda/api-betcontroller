@@ -18,6 +18,7 @@ class CreateCountriesTable extends Migration
             $table->string('name')->nullable(false);
             $table->string('image')->nullable(true);
             $table->timestamps();
+            $table->unique(array('id','name'));  
         });
     }
 

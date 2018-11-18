@@ -8,6 +8,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use \Illuminate\Database\QueryException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -61,9 +62,9 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof ModelNotFoundException) {
-            $modelo = class_basename($exception->getModel());
+            $model = strtolower(class_basename($exception->getModel()));
 
-            return $this->errorResponse('There is no record from the '.$modelo.' model with the specified ID', 404);
+            return $this->errorResponse("There is no record from the $model model with the specified ID", 404);
         }
 
         if ($exception instanceof AuthenticationException) {
@@ -79,11 +80,23 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof HttpException) {
+            
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         }
 
-        if (config('app.debug')) {
-            return parent::render($request, $exception);
+        if ($exception instanceof QueryException) {
+           
+            $code       = (int)$exception->errorInfo[1];
+            $message    = (string)$exception->errorInfo[2];
+            
+            //1062 Duplicate entry
+            if ($code == 1062){ 
+                return $this->errorResponse($message,409);
+            }
+        }
+
+        if (config('app.debug')){
+            return parent::render($request,$exception);
         }
 
         return $this->errorResponse('Unexpected Failure', 500);
@@ -116,6 +129,7 @@ class Handler extends ExceptionHandler
      *
      * @return bool
      */
+    
     private function isFrontend($request)
     {
         return $request->acceptsHtml() && collect($request->route()->middleware())->contains('web');

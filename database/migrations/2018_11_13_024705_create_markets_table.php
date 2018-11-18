@@ -17,6 +17,7 @@ class CreateMarketsTable extends Migration
             $table->increments('id');
             $table->string('name',100)->nullable(false);
             $table->timestamps();
+            $table->unique(array('id','name'));
         });
     }
 

@@ -61,7 +61,7 @@ class SportController extends ApiController
     public function show($id)
     {
         //
-        $sports = Sport::find($id);
+        $sports = Sport::findOrFail($id);
 
         return $this->showOne($sports);
     }

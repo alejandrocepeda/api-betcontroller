@@ -19,7 +19,9 @@ class CreateEventsTable extends Migration
             $table->date('date')->nullable(true);
             $table->time('start')->nullable(true);
             $table->integer('league_id');
+            $table->integer('idevento');
             $table->timestamps();
+            $table->unique(array('id','name'));
         });
     }
 
