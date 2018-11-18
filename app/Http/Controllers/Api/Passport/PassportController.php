@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Http\Controllers\Api\Passport;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
+
+use Illuminate\Support\Facades\Auth;
+use App\User;
+use Validator;
+
+class PassportController extends ApiController
+{
+    public $successStatus = 200;
+
+    public function login(Request $request)
+    {
+        //
+        $rules = ['email'    => 'required|email',
+                  'password' => 'required|string|min:6', ];
+
+        $this->validate($request, $rules);
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true)) {
+            
+            $user = Auth::user();
+
+            $token = $user->createToken('MyApp')->accessToken; 
+           
+            //return $this->showOne($user);
+            
+            return response()->json([
+                'data'  => $user,
+                'token' => $token
+            ]);
+            
+
+        } else {
+            //return $this->errorResponse('Unauthorized: Access is denied due to invalid credentials.', 401);
+            return response()->json([
+                'message' => 'Unauthorized: Access is denied due to invalid credentials.'
+            ]);
+        }
+    }
+
+    
+}
