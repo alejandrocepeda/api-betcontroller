@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
+Route::get('/api/xx', function () {
     return response()->json(['success' => 'ok']);
 });
 
