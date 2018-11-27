@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Event;
+namespace App\Http\Controllers\Api\Country;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Event;
+use App\Country;
 
-class EventController extends ApiController
+class CountryController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,8 @@ class EventController extends ApiController
     public function index()
     {
         //
-        $events = Event::all();
-
-        return $this->showAll($events);
+        $countries = Country::all();
+        return $this->showAll($countries);
     }
 
     /**
@@ -40,24 +39,15 @@ class EventController extends ApiController
     public function store(Request $request)
     {
         //
-
         $rules = [
-            'name'          => 'required',
-            'idevento'      => 'required'
+            'name'      => 'required',
         ];
-        
+
         $this->validate($request, $rules);
 
-        $event = Event::where('idevento', '=', $request->idevento)->get();
+        $country= Country::create($request->all());
 
-        if (count($event) == 0){
-            $event = Event::create($request->all());
-
-            return $this->successResponse(['data' => $event, 'message' => 'Event Created'], 201);
-        }
-        else{
-            return $this->errorResponse('The event ' . $request->idevento . ' already exists', 201);
-        }
+        return $this->successResponse(['data'=> $country, 'message' => 'Country Created'], 201);
     }
 
     /**
@@ -69,10 +59,6 @@ class EventController extends ApiController
     public function show($id)
     {
         //
-
-        $event = Event::findOrFail($id);
-
-        return $this->showOne($event);
     }
 
     /**

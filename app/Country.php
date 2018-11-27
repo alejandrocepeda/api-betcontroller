@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class Country extends Model
 {
     //
     protected $fillable = [
-        'name','league_id','idevento','date','start'
+        'name','IDNazione'
     ];
 
     protected $hidden = ['created_at','updated_at']; 

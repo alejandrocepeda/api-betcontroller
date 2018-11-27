@@ -15,13 +15,13 @@ class Sport extends Model
         'name','idsport'
     ];
 
-    /**
+    /**x`
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'created_at','updated_at'
+        'created_at','updated_at','idsport'
     ];
 
     

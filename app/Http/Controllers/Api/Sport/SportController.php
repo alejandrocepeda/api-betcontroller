@@ -21,6 +21,24 @@ class SportController extends ApiController
         return $this->showAll($sports);
     }
 
+    public function getGuzzleRequest()
+    {
+        $url = 'http://timerbet.com/HandlerQt.ashx?method=menunaz&idsport=0&TipoVis=all';
+
+        $client = new \GuzzleHttp\Client();
+        $request = $client->get($url);
+        $response = $request->getBody()->getContents();
+       
+       // dd($response);
+        return $response;
+
+
+        
+        return response()->json(
+            $response
+        );
+    }
+
     /**
      * Show the form for creating a new resource.
      *

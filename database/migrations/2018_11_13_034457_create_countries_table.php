@@ -17,8 +17,8 @@ class CreateCountriesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable(false);
             $table->string('image')->nullable(true);
+            $table->integer('IDNazione');
             $table->timestamps();
-            $table->unique(array('id','name'));  
         });
     }
 

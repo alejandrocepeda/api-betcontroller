@@ -17,8 +17,12 @@ use Illuminate\Http\Request;
 Route::post('/login', 'Api\Passport\PassportController@login')->name('login');
 Route::post('/register', 'Api\User\UserController@register')->name('register');
 
+
+Route::get('/guzzle', 'Api\Sport\SportController@getGuzzleRequest');
+
 Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('/events','Api\Event\EventController');
 	Route::resource('/users', 'Api\User\UserController');	
 	Route::resource('/sports', 'Api\Sport\SportController');
+	Route::resource('/countries', 'Api\Country\CountryController');
 });
