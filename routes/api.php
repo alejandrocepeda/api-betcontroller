@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 
-Route::post('/login', 'Api\Passport\PassportController@login')->name('login');
+Route::post('login', 'Api\Passport\PassportController@login')->name('login');
 Route::post('/register', 'Api\User\UserController@register')->name('register');
 
 
