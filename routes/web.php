@@ -11,7 +11,7 @@
 |
 */
 
-echo response()->json(['success' => 'ok']);
+
 
 Route::get('/', function () {
     return view('welcome');

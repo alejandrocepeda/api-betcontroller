@@ -12,22 +12,17 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-echo response()->json(['success' => 'ok']);
-
-Route::get('api-betcontroller/api/xx', function () {
-    return response()->json(['success' => 'ok']);
-});
 
 
-Route::post('login', 'Api\Passport\PassportController@login')->name('login');
+Route::post('/login', 'Api\Passport\PassportController@login')->name('login');
 Route::post('/register', 'Api\User\UserController@register')->name('register');
 
 
 Route::get('/guzzle', 'Api\Sport\SportController@getGuzzleRequest');
 
-//Route::group(['middleware' => 'auth:api'], function(){
+Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('events','Api\Event\EventController');
 	Route::resource('/users', 'Api\User\UserController');	
 	Route::resource('/sports', 'Api\Sport\SportController');
 	Route::resource('/countries', 'Api\Country\CountryController');
-//});
+});
