@@ -21,6 +21,7 @@ Route::get('/login', function () {
 //Route::post('/register', 'Api\User\UserController@register')->name('register');
 
 
+/*
 Route::get('/guzzle', 'Api\Sport\SportController@getGuzzleRequest');
 
 Route::group(['middleware' => 'auth:api'], function(){
@@ -29,5 +30,6 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('/sports', 'Api\Sport\SportController');
 	Route::resource('/countries', 'Api\Country\CountryController');
 });
+*/
 
 
