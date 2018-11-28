@@ -11,7 +11,9 @@
 |
 */
 
-dd(Route);
+$routeCollection = Route::getRoutes();
+
+dd($routeCollection);
 
 Route::get('/', function () {
     return response()->json([
