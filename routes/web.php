@@ -13,7 +13,7 @@
 
 
 
-Route::get('/login', function () {
+Route::get('login', function () {
     return view('welcome');
 });
 
