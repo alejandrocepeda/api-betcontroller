@@ -18,7 +18,7 @@ Route::get('/login', function () {
 });
 
 //Route::post('/login', 'Api\Passport\PassportController@login')->name('login');
-**Route::post('/register', 'Api\User\UserController@register')->name('register');
+//Route::post('/register', 'Api\User\UserController@register')->name('register');
 
 
 Route::get('/guzzle', 'Api\Sport\SportController@getGuzzleRequest');
