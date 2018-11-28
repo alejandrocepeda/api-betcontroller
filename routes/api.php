@@ -14,9 +14,9 @@ use Illuminate\Http\Request;
 */
 
 
-Route::get('/users', function () {
+Route::get('/', function () {
     return response()->json([
-    	'message' => 'success'
+    	'messagexx' => 'successxx'
     ]);
 });
 
