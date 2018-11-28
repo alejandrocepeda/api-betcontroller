@@ -13,7 +13,7 @@
 
 
 
-Route::get('/', function () {
+Route::get('/public', function () {
     return view('welcome');
 });
 
