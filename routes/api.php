@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/api/xx', function () {
+Route::get('api-betcontroller/api/xx', function () {
     return response()->json(['success' => 'ok']);
 });
 
