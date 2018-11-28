@@ -35,7 +35,7 @@ class SportController extends ApiController
 
         
         return response()->json([
-            'data' => $response
+            $response
         ]);
     }
 
