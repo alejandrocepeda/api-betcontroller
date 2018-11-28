@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-response()->json(['success' => 'ok']);
+echo response()->json(['success' => 'ok']);
 
 Route::get('api-betcontroller/api/xx', function () {
     return response()->json(['success' => 'ok']);
