@@ -14,13 +14,13 @@ use Illuminate\Http\Request;
 */
 
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return response()->json([
     	'messagexx' => 'successxx'
     ]);
 });
 
-
+/*
 Route::post('/login', 'Api\Passport\PassportController@login')->name('login');
 Route::post('/register', 'Api\User\UserController@register')->name('register');
 
@@ -33,3 +33,4 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('/sports', 'Api\Sport\SportController');
 	Route::resource('/countries', 'Api\Country\CountryController');
 });
+*/
