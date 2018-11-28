@@ -11,11 +11,7 @@
 |
 */
 
-$routeCollection = Route::getRoutes();
-
-dd($routeCollection);
-
-Route::get('/', function () {
+Route::get('/login', function () {
     return response()->json([
     	'messagexx' => 'successxx'
     ]);
