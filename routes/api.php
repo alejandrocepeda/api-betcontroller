@@ -14,6 +14,13 @@ use Illuminate\Http\Request;
 */
 
 
+Route::get('/users', function () {
+    return response()->json([
+    	'message' => 'success'
+    ]);
+});
+
+
 Route::post('/login', 'Api\Passport\PassportController@login')->name('login');
 Route::post('/register', 'Api\User\UserController@register')->name('register');
 
