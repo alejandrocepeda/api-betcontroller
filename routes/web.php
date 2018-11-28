@@ -13,8 +13,10 @@
 
 
 
-Route::get('login', function () {
-    return view('welcome');
+Route::get('/', function () {
+    return response()->json([
+    	'messagexx' => 'successxx'
+    ]);
 });
 
 //Route::post('/login', 'Api\Passport\PassportController@login')->name('login');
