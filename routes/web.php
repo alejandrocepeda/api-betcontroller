@@ -11,9 +11,9 @@
 |
 */
 
+dd(Route);
 
-
-Route::get('login', function () {
+Route::get('/', function () {
     return response()->json([
     	'messagexx' => 'successxx'
     ]);
