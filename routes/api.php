@@ -13,15 +13,18 @@ use Illuminate\Http\Request;
 |
 */
 
-
+/*
 Route::get('login', function () {
     return response()->json([
     	'messagexx' => 'successxx'
     ]);
 });
+*/
+
+
+Route::post('login', 'Api\Passport\PassportController@login')->name('login');
 
 /*
-Route::post('/login', 'Api\Passport\PassportController@login')->name('login');
 Route::post('/register', 'Api\User\UserController@register')->name('register');
 
 
