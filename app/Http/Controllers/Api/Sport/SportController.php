@@ -34,9 +34,9 @@ class SportController extends ApiController
 
 
         
-        return response()->json([
+        return response()->json(
             $response
-        ]);
+        );
     }
 
     /**
