@@ -76,6 +76,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof MethodNotAllowedHttpException) {
+            dd($exception);
             return $this->errorResponse('The method which is specified in the request, it isn\'t valid', 405);
         }
 
