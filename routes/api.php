@@ -13,22 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-/*
-Route::get('login', function () {
-    return response()->json([
-    	'messagexx' => 'successxx'
-    ]);
-});
-*/
-
-
 Route::post('login', 'Api\Passport\PassportController@login')->name('login');
-Route::post('register', 'Api\User\UserController@register')->name('register');
-
-
-Route::get('guzzle', 'Api\Sport\SportController@getGuzzleRequest');
 
 Route::group(['middleware' => 'auth:api'], function(){
+
+	Route::post('register', 'Api\User\UserController@register')->name('register');
+	Route::get('guzzle', 'Api\Sport\SportController@getGuzzleRequest');
 
 	Route::resource('events','Api\Event\EventController');
 	Route::resource('users', 'Api\User\UserController');	
