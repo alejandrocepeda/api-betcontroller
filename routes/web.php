@@ -13,7 +13,7 @@
 
 
 
-Route::get('/api-betcontroller/public/login', function () {
+Route::get('/public/login', function () {
     return response()->json([
     	'messagexx' => 'successxx'
     ]);
