@@ -13,7 +13,7 @@
 
 
 
-Route::get('/public/login', function () {
+Route::get('login', function () {
     return response()->json([
     	'messagexx' => 'successxx'
     ]);
