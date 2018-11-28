@@ -30,13 +30,13 @@ class SportController extends ApiController
         $response = $request->getBody()->getContents();
        
        // dd($response);
-        return $response;
+        //return $response;
 
 
         
-        return response()->json(
-            $response
-        );
+        return response()->json([
+            'data' => $response
+        ]);
     }
 
     /**
