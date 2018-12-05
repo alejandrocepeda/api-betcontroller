@@ -37,7 +37,7 @@ class UserController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function register(Request $request)
-    {
+    {           
         $rules = ['name'        => 'required',
                   'password'    => 'required|min:6',
                   'email'       => 'required|email|unique:users',

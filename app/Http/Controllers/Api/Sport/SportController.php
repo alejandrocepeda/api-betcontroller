@@ -21,22 +21,26 @@ class SportController extends ApiController
         return $this->showAll($sports);
     }
 
-    public function getGuzzleRequest()
+    public function getGuzzleRequest(Request $request)
     {
-        $url = 'http://timerbet.com/HandlerQt.ashx?method=menunaz&idsport=0&TipoVis=all';
+        //dd($request->id);
+        
+        if (!isset($request->id)){
+            $request->id = 0;
+        }
+        
+        $url = 'http://winnerbetweb.net/HandlerQt.ashx?IDPalinsesto='.$request->id.'&IDRaggruppamento=0&FiltroVis=all&method=OddsRaggr';
 
         $client = new \GuzzleHttp\Client();
-        $request = $client->get($url);
-        $response = $request->getBody()->getContents();
+        $request = $client->get($url,[
+            'headers' => [
+                'Accept-Language' => 'en-EN,es;q=0.9'
+            ]
+        ]);
+
+        $response =  json_decode($request->getBody()->getContents(), true);
        
-       // dd($response);
-        //return $response;
-
-
-        
-        return response()->json(
-            $response
-        );
+        return $response['SubEventList'];
     }
 
     /**
