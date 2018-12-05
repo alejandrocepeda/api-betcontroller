@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::post('login', 'Api\Passport\PassportController@login')->name('login');
 Route::post('register', 'Api\User\UserController@register')->name('register');
 
-Route::get('guzzle/{id}', 'Api\Sport\SportController@getGuzzleRequest');
+Route::get('armanagement/{id}', 'Api\Sport\SportController@getGuzzleRequest');
 
 Route::group(['middleware' => 'auth:api'], function(){
 	
