@@ -40,7 +40,7 @@ class SportController extends ApiController
 
         $response =  json_decode($request->getBody()->getContents(), true);
        
-        return $response['SubEventList'];
+        return $response;
     }
 
     /**
