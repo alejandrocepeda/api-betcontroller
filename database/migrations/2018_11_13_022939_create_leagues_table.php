@@ -18,7 +18,6 @@ class CreateLeaguesTable extends Migration
             $table->string('name',100)->nullable(false);
             $table->integer('sport_id');
             $table->integer('country_id');
-            $table->integer('IDPalinsesto')->nullable(true);
             $table->timestamps();
             $table->unique(array('id','name'));
         });
