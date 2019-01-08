@@ -13,11 +13,13 @@ class EventController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
+
+    //public $relationships = ['league'];
+
     public function index()
     {
         //
         $events = Event::all();
-
         return $this->showAll($events);
     }
 
@@ -43,7 +45,6 @@ class EventController extends ApiController
 
         $rules = [
             'name'          => 'required',
-            'idevento'      => 'required'
         ];
         
         $this->validate($request, $rules);
@@ -69,9 +70,7 @@ class EventController extends ApiController
     public function show($id)
     {
         //
-
         $event = Event::findOrFail($id);
-
         return $this->showOne($event);
     }
 

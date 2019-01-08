@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\Transformers\SportTransformer;
 use Illuminate\Database\Eloquent\Model;
 
 class Sport extends Model
@@ -12,7 +12,7 @@ class Sport extends Model
      * @var array
      */
     protected $fillable = [
-        'name','idsport'
+        'name','id'
     ];
 
     /**x`
@@ -21,8 +21,12 @@ class Sport extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at','updated_at','idsport'
+        'created_at','updated_at'
     ];
 
-    
+    public $transformer = SportTransformer::class;
+
+    public function league(){
+        return $this->hasMany('App\League');  
+    }
 }

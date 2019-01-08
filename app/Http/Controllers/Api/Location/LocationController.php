@@ -1,46 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Api\Sport;
+namespace App\Http\Controllers\Api\Location;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Sport;
+use App\Location;
 
-class SportController extends ApiController
+class LocationController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
         //
-        $sports = Sport::all();
-        return $this->showAll($sports);
-    }
 
-    public function getGuzzleRequest(Request $request)
-    {
-        //dd($request->id);
+        $location = Location::all();
+
+        return $this->showAll($location);
         
-        if (!isset($request->id)){
-            $request->id = 0;
-        }
-        
-        $url = 'http://winnerbetweb.net/HandlerQt.ashx?IDPalinsesto='.$request->id.'&IDRaggruppamento=0&FiltroVis=all&method=OddsRaggr';
-
-        $client = new \GuzzleHttp\Client();
-        $request = $client->get($url,[
-            'headers' => [
-                'Accept-Language' => 'en-EN,es;q=0.9'
-            ]
-        ]);
-
-        $response =  json_decode($request->getBody()->getContents(), true);
-       
-        return $response;
     }
 
     /**
@@ -62,15 +42,6 @@ class SportController extends ApiController
     public function store(Request $request)
     {
         //
-        $rules = [
-            'name'      => 'required',
-        ];
-
-        $this->validate($request, $rules);
-
-        $sport = Sport::create($request->all());
-
-        return $this->successResponse(['data'=> $sport, 'message' => 'Sport Created'], 201);
     }
 
     /**
@@ -82,9 +53,8 @@ class SportController extends ApiController
     public function show($id)
     {
         //
-        $sports = Sport::findOrFail($id);
-
-        return $this->showOne($sports);
+        $location = Location::findOrFail($id);
+        return $this->showOne($location);
     }
 
     /**

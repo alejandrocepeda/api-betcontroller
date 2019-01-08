@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Api\Country;
+namespace App\Http\Controllers\Api\League;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Country;
+use App\League;
 
-class CountryController extends ApiController
+class LeagueController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         //
-        $countries = Country::all();
-        return $this->showAll($countries);
+        $leagues = League::all();
+        return $this->showAll($leagues);
     }
 
     /**
@@ -39,15 +40,6 @@ class CountryController extends ApiController
     public function store(Request $request)
     {
         //
-        $rules = [
-            'name'      => 'required',
-        ];
-
-        $this->validate($request, $rules);
-
-        $country= Country::create($request->all());
-
-        return $this->successResponse(['data'=> $country, 'message' => 'Country Created'], 201);
     }
 
     /**
@@ -59,6 +51,9 @@ class CountryController extends ApiController
     public function show($id)
     {
         //
+
+        $legaue = League::findOrFail($id);
+        return $this->showOne($legaue);
     }
 
     /**

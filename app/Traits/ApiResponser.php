@@ -24,7 +24,6 @@ trait ApiResponser{
         $transformer = $collection->first()->transformer;
         $collection = $this->transformData($collection, $transformer);
 
-
         return $this->successResponse($collection,$code);
     }
 
@@ -37,6 +36,7 @@ trait ApiResponser{
     }
 
     protected function transformData($data,$transformer){
+        
         $transformation = fractal($data, new $transformer);
 
         return $transformation->toArray();
