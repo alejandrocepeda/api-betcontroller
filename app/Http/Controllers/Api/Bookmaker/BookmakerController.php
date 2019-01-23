@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Location;
+namespace App\Http\Controllers\Api\Bookmaker;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Location;
+use App\Bookmaker;
 
-class LocationController extends ApiController
+class BookmakerController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,8 @@ class LocationController extends ApiController
     public function index()
     {
         //
-
-        $location = Location::all();
-
-        return $this->showAll($location);   
+        $bookmaker = Bookmaker::all();
+        return $this->showAll($bookmaker);
     }
 
     /**
@@ -30,15 +28,6 @@ class LocationController extends ApiController
     public function create()
     {
         //
-        $rules = [
-            'name'  => 'required|max:100'
-        ];
-        
-        $this->validate($request, $rules);
-
-        $location = Location::create($request->all());
-
-        return $this->successResponse(['data' => $location, 'message' => 'Location Created'], 201);
     }
 
     /**
@@ -50,6 +39,15 @@ class LocationController extends ApiController
     public function store(Request $request)
     {
         //
+        $rules = [
+            'name' => 'required|max:100',
+        ];
+        
+        $this->validate($request, $rules);
+
+        $bookmaker = Bookmaker::create($request->all());
+
+        return $this->successResponse(['data' => $bookmaker, 'message' => 'Bookmaker Created'], 201);
     }
 
     /**
@@ -61,8 +59,8 @@ class LocationController extends ApiController
     public function show($id)
     {
         //
-        $location = Location::findOrFail($id);
-        return $this->showOne($location);
+        $Bookmaker = Bookmaker::findOrFail($id);
+        return $this->showOne($Bookmaker);
     }
 
     /**

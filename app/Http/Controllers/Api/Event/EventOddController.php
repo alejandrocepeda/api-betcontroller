@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\Location;
+namespace App\Http\Controllers\Api\Event;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
-use App\Location;
+use App\Http\Controllers\Controller;
 
-class LocationController extends ApiController
+class EventOddController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +15,6 @@ class LocationController extends ApiController
     public function index()
     {
         //
-
-        $location = Location::all();
-
-        return $this->showAll($location);   
     }
 
     /**
@@ -30,15 +25,6 @@ class LocationController extends ApiController
     public function create()
     {
         //
-        $rules = [
-            'name'  => 'required|max:100'
-        ];
-        
-        $this->validate($request, $rules);
-
-        $location = Location::create($request->all());
-
-        return $this->successResponse(['data' => $location, 'message' => 'Location Created'], 201);
     }
 
     /**
@@ -61,8 +47,6 @@ class LocationController extends ApiController
     public function show($id)
     {
         //
-        $location = Location::findOrFail($id);
-        return $this->showOne($location);
     }
 
     /**

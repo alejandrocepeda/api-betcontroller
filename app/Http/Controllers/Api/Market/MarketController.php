@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Location;
+namespace App\Http\Controllers\Api\Market;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Location;
+use App\Market;
 
-class LocationController extends ApiController
+class MarketController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class LocationController extends ApiController
     {
         //
 
-        $location = Location::all();
+        $market = Market::all();
 
-        return $this->showAll($location);   
+        return $this->showAll($market); 
     }
 
     /**
@@ -30,15 +30,6 @@ class LocationController extends ApiController
     public function create()
     {
         //
-        $rules = [
-            'name'  => 'required|max:100'
-        ];
-        
-        $this->validate($request, $rules);
-
-        $location = Location::create($request->all());
-
-        return $this->successResponse(['data' => $location, 'message' => 'Location Created'], 201);
     }
 
     /**
@@ -50,6 +41,17 @@ class LocationController extends ApiController
     public function store(Request $request)
     {
         //
+
+        $rules = [
+            'name' => 'required|max:100',
+        ];
+        
+        $this->validate($request, $rules);
+
+       
+        $market = Market::create($request->all());
+
+        return $this->successResponse(['data' => $market, 'message' => 'Market Created'], 201);
     }
 
     /**
@@ -61,8 +63,9 @@ class LocationController extends ApiController
     public function show($id)
     {
         //
-        $location = Location::findOrFail($id);
-        return $this->showOne($location);
+
+        $market = Market::findOrFail($id);
+        return $this->showOne($market);
     }
 
     /**
@@ -94,8 +97,12 @@ class LocationController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Market $market)
     {
         //
+
+        $market->delete();
+        
+        return $this->successResponse(['data' => $market, 'message' => 'Market Deleted'], 201);
     }
 }

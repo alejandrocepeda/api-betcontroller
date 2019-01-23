@@ -63,7 +63,7 @@ class SportController extends ApiController
     {
         //
         $rules = [
-            'name'      => 'required',
+            'name' => 'required|max:100',
         ];
 
         $this->validate($request, $rules);

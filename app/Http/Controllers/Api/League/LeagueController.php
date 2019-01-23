@@ -40,6 +40,16 @@ class LeagueController extends ApiController
     public function store(Request $request)
     {
         //
+
+        $rules = [
+            'name' => 'required|max:100'
+        ];
+        
+        $this->validate($request, $rules);
+
+        $league = League::create($request->all());
+
+        return $this->successResponse(['data' => $league, 'message' => 'League Created'], 201);
     }
 
     /**

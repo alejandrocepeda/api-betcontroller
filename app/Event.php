@@ -20,11 +20,20 @@ class Event extends Model
     public $transformer = EventTransformer::class;
     
     public function sport(){
-        return $this->hasOne('App\Sport','id','sport_id'); 
+
+        return $this->hasManyThrough(
+            'App\Sport',
+            'App\League',
+            'id', // Local key on users Sport...
+            'id', // Local key on posts League...
+            'league_id', // Foreign key on countries Event...
+            'sport_id' // Foreign key on users League...
+        );
     }
     
 
     public function league(){
         return $this->hasOne('App\League','id','league_id');  
     }
+    
 }

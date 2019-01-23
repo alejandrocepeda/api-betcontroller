@@ -44,21 +44,16 @@ class EventController extends ApiController
         //
 
         $rules = [
-            'name'          => 'required',
+            'name' => 'required|max:100',
         ];
         
         $this->validate($request, $rules);
 
-        $event = Event::where('idevento', '=', $request->idevento)->get();
+       
+        $event = Event::create($request->all());
 
-        if (count($event) == 0){
-            $event = Event::create($request->all());
-
-            return $this->successResponse(['data' => $event, 'message' => 'Event Created'], 201);
-        }
-        else{
-            return $this->errorResponse('The event ' . $request->idevento . ' already exists', 201);
-        }
+        return $this->successResponse(['data' => $event, 'message' => 'Event Created'], 201);
+        
     }
 
     /**
@@ -69,6 +64,7 @@ class EventController extends ApiController
      */
     public function show($id)
     {
+        
         //
         $event = Event::findOrFail($id);
         return $this->showOne($event);
@@ -103,8 +99,11 @@ class EventController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
         //
+        $event->delete();
+        
+        return $this->successResponse(['data' => $event, 'message' => 'Event Deleted'], 201);
     }
 }

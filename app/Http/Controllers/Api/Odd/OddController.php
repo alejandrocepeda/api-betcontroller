@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Location;
+namespace App\Http\Controllers\Api\Odd;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Location;
+use App\Odd;
 
-class LocationController extends ApiController
+class OddController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class LocationController extends ApiController
     {
         //
 
-        $location = Location::all();
+        $odd = Odd::all();
 
-        return $this->showAll($location);   
+        return $this->showAll($odd); 
     }
 
     /**
@@ -30,15 +30,6 @@ class LocationController extends ApiController
     public function create()
     {
         //
-        $rules = [
-            'name'  => 'required|max:100'
-        ];
-        
-        $this->validate($request, $rules);
-
-        $location = Location::create($request->all());
-
-        return $this->successResponse(['data' => $location, 'message' => 'Location Created'], 201);
     }
 
     /**
@@ -50,6 +41,16 @@ class LocationController extends ApiController
     public function store(Request $request)
     {
         //
+       
+        $rules = [
+            'name'          => 'required|max:100',
+            'market_id'     => 'required',
+        ];
+        
+        $this->validate($request, $rules);
+        $odd = Odd::create($request->all());
+
+        return $this->successResponse(['data' => $odd, 'message' => 'Odd Created'], 201);
     }
 
     /**
@@ -61,8 +62,8 @@ class LocationController extends ApiController
     public function show($id)
     {
         //
-        $location = Location::findOrFail($id);
-        return $this->showOne($location);
+        $odd = Odd::findOrFail($id);
+        return $this->showOne($odd);
     }
 
     /**
@@ -94,8 +95,11 @@ class LocationController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Odd $odd)
     {
         //
+
+        $odd->delete();
+        return $this->successResponse(['data' => $odd, 'message' => 'Odd Deleted'], 201);
     }
 }

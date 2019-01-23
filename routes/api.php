@@ -18,12 +18,15 @@ Route::post('register', 'Api\User\UserController@register')->name('register');
 
 Route::get('armanagement/{id}', 'Api\Sport\SportController@getGuzzleRequest');
 
-Route::group(['middleware' => 'auth:api'], function(){
+//Route::group(['middleware' => 'auth:api'], function(){
 	
 	Route::resource('events','Api\Event\EventController');
 	Route::resource('leagues', 'Api\League\LeagueController');
 	Route::resource('users', 'Api\User\UserController');	
 	Route::resource('sports', 'Api\Sport\SportController');
 	Route::resource('locations', 'Api\Location\LocationController');
-});
+	Route::resource('bookmakers', 'Api\Bookmaker\BookmakerController');
+	Route::resource('markets', 'Api\Market\MarketController');
+	Route::resource('odds', 'Api\Odd\OddController');
+//});
 
