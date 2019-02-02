@@ -60,11 +60,9 @@ class MarketController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Market $market)
     {
         //
-
-        $market = Market::findOrFail($id);
         return $this->showOne($market);
     }
 
@@ -86,9 +84,22 @@ class MarketController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Market $market)
     {
-        //
+        $rules = [
+            'name'  => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        $market->fill($request->all());
+        if ($market->isClean()) {
+            return $this->errorResponse('At least one different value must be specified to update', 422);
+        }
+        
+        $market->save();
+
+        return $this->successResponse(['data' => $market, 'message' => 'Market updated'],201);
     }
 
     /**

@@ -15,9 +15,12 @@ class OddTransformer extends TransformerAbstract
     public function transform(Odd $odd)
     {
         return [
-            'id'        => (int)$odd->id,
-            'name'      => (string)$odd->name,
-            'market'    => $odd->markets
+            'id'                => (int)$odd->id,
+            'market_id'         => (int)$odd->market_id,
+            'bet_id'            => (int)$odd->bet_id,
+            'value'             => (double)$odd->value,
+            'specialValue'      => (double)$odd->specialValue,
+            'market'            => $odd->market
         ];
     }
 }

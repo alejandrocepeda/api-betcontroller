@@ -41,16 +41,19 @@ class OddController extends ApiController
     public function store(Request $request)
     {
         //
-       
         $rules = [
-            'name'          => 'required|max:100',
-            'market_id'     => 'required',
+            'event_id'  => 'required',
+            'market_id' => 'required',
+            'bet_id'    => 'required',
         ];
-        
+
         $this->validate($request, $rules);
+
         $odd = Odd::create($request->all());
 
-        return $this->successResponse(['data' => $odd, 'message' => 'Odd Created'], 201);
+        return $this->successResponse(['data'=> $odd, 'message' => 'Odd Created'], 201);
+       
+        
     }
 
     /**
@@ -59,10 +62,8 @@ class OddController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Odd $odd)
     {
-        //
-        $odd = Odd::findOrFail($id);
         return $this->showOne($odd);
     }
 
@@ -84,9 +85,26 @@ class OddController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Odd $odd)
     {
         //
+        $rules = [
+            'value'     => 'required',
+            'event_id'  => 'required',
+            'market_id' => 'required',
+            'bet_id'    => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        $odd->fill($request->all());
+        if ($odd->isClean()) {
+            return $this->errorResponse('At least one different value must be specified to update', 422);
+        }
+        
+        $odd->save();
+
+        return $this->successResponse(['data' => $odd, 'message' => 'Odd updated'],201);
     }
 
     /**

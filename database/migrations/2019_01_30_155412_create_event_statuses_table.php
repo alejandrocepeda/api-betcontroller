@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOddsTable extends Migration
+class CreateEventStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateOddsTable extends Migration
      */
     public function up()
     {
-        Schema::create('odds', function (Blueprint $table) {
+        Schema::create('event_statuses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100)->nullable(false);
-            $table->integer('market_id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateOddsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('odds');
+        Schema::dropIfExists('event_statuses');
     }
 }

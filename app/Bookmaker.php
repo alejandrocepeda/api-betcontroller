@@ -14,4 +14,8 @@ class Bookmaker extends Model
     protected $fillable = [
         'name','id'
     ];
+
+    public function status(){
+        return $this->hasOne('App\BookmakerStatus','id','bookmaker_status_id');
+    }
 }

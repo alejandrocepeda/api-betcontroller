@@ -79,12 +79,9 @@ class SportController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Sport $sport)
     {
-        //
-        $sports = Sport::findOrFail($id);
-
-        return $this->showOne($sports);
+        return $this->showOne($sport);
     }
 
     /**
@@ -105,9 +102,23 @@ class SportController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Sport $sport)
     {
         //
+        $rules = [
+            'name'  => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        $sport->fill($request->all());
+        if ($sport->isClean()) {
+            return $this->errorResponse('At least one different value must be specified to update', 422);
+        }
+        
+        $sport->save();
+
+        return $this->successResponse(['data' => $sport, 'message' => 'Sport Updated'],201);
     }
 
     /**
@@ -116,8 +127,9 @@ class SportController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Sport $sport)
     {
-        //
+        $sport->delete();
+        return $this->successResponse(['data' => $sport, 'message' => 'Sport Deleted'], 201);
     }
 }

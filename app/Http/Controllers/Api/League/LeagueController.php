@@ -42,7 +42,8 @@ class LeagueController extends ApiController
         //
 
         $rules = [
-            'name' => 'required|max:100'
+            'name'      => 'required',
+            'sport_id'  => 'required',
         ];
         
         $this->validate($request, $rules);
@@ -58,11 +59,9 @@ class LeagueController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(League $legaue)
     {
         //
-
-        $legaue = League::findOrFail($id);
         return $this->showOne($legaue);
     }
 
@@ -84,9 +83,23 @@ class LeagueController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, League $league)
     {
         //
+        $rules = [
+            'name'  => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        $league->fill($request->all());
+        if ($league->isClean()) {
+            return $this->errorResponse('At least one different value must be specified to update', 422);
+        }
+        
+        $league->save();
+
+        return $this->successResponse(['data' => $league, 'message' => 'League Updated'],201);
     }
 
     /**
@@ -95,8 +108,9 @@ class LeagueController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(League $league)
     {
-        //
+        $league->delete();   
+        return $this->successResponse(['data' => $league, 'message' => 'League Deleted'], 201);
     }
 }

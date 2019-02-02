@@ -56,10 +56,9 @@ class BookmakerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Bookmaker $Bookmaker)
     {
         //
-        $Bookmaker = Bookmaker::findOrFail($id);
         return $this->showOne($Bookmaker);
     }
 
@@ -81,9 +80,22 @@ class BookmakerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Bookmaker $bookmaker)
     {
-        //
+        $rules = [
+            'name'  => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        $bookmaker->fill($request->all());
+        if ($bookmaker->isClean()) {
+            return $this->errorResponse('At least one different value must be specified to update', 422);
+        }
+        
+        $bookmaker->save();
+
+        return $this->successResponse(['data' => $bookmaker, 'message' => 'Bookmaker updated'],201);
     }
 
     /**
@@ -92,8 +104,9 @@ class BookmakerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Bookmaker $bookmaker)
     {
-        //
+        $bookmaker->delete();   
+        return $this->successResponse(['data' => $bookmaker, 'message' => 'Bookmaker Deleted'], 201);
     }
 }

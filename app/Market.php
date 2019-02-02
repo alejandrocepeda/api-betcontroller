@@ -16,7 +16,11 @@ class Market extends Model
 
     public $transformer = MarketTransformer::class;
 
-    public function odds(){
-        return $this->hasMany('App\Odd','market_id'); 
+    public function bets(){
+        return $this->hasMany('App\Bet');
+    }
+
+    public function status(){
+        return $this->hasOne('App\MarketStatus','id','market_status_id');
     }
 }

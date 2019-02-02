@@ -16,9 +16,10 @@ class EventController extends ApiController
 
     //public $relationships = ['league'];
 
-    public function index()
+    public function index(Request $request)
     {
         //
+
         $events = Event::all();
         return $this->showAll($events);
     }
@@ -62,11 +63,8 @@ class EventController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Event $event)
     {
-        
-        //
-        $event = Event::findOrFail($id);
         return $this->showOne($event);
     }
 
@@ -88,9 +86,24 @@ class EventController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Event $event)
     {
         //
+
+        $rules = [
+            'name'  => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        $event->fill($request->all());
+        if ($event->isClean()) {
+            return $this->errorResponse('At least one different value must be specified to update', 422);
+        }
+        
+        $event->save();
+
+        return $this->successResponse(['data' => $event, 'message' => 'Event updated'],201);
     }
 
     /**

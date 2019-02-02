@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Event;
+namespace App\Http\Controllers\Api\Bet;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
+use App\Bet;
 
-class EventOddController extends Controller
+class BetController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +16,9 @@ class EventOddController extends Controller
     public function index()
     {
         //
+        $bet = Bet::all();
+
+        return $this->showAll($bet); 
     }
 
     /**
@@ -36,6 +40,15 @@ class EventOddController extends Controller
     public function store(Request $request)
     {
         //
+        $rules = [
+            'name'          => 'required|max:100',
+            'market_id'     => 'required',
+        ];
+        
+        $this->validate($request, $rules);
+        $bet = Bet::create($request->all());
+
+        return $this->successResponse(['data' => $bet, 'message' => 'Bet Created'], 201);
     }
 
     /**
@@ -44,9 +57,9 @@ class EventOddController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Bet $bet)
     {
-        //
+        return $this->showOne($bet);
     }
 
     /**
@@ -67,9 +80,23 @@ class EventOddController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Bet $bet)
     {
-        //
+        $rules = [
+            'name'          => 'required',
+            'market_id'     => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        $bet->fill($request->all());
+        if ($bet->isClean()) {
+            return $this->errorResponse('At least one different value must be specified to update', 422);
+        }
+        
+        $bet->save();
+
+        return $this->successResponse(['data' => $bet, 'message' => 'Bet updated'],201);
     }
 
     /**
@@ -78,8 +105,10 @@ class EventOddController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Bet $bet)
     {
         //
+        $bet->delete();
+        return $this->successResponse(['data' => $bet, 'message' => 'Bet Deleted'], 201);
     }
 }

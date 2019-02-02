@@ -5,6 +5,9 @@ namespace App;
 use App\Transformers\EventTransformer;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Odd;
+use App\League;
+use App\Market;
 
 class Event extends Model
 {
@@ -20,20 +23,24 @@ class Event extends Model
     public $transformer = EventTransformer::class;
     
     public function sport(){
-
-        return $this->hasManyThrough(
-            'App\Sport',
-            'App\League',
-            'id', // Local key on users Sport...
-            'id', // Local key on posts League...
-            'league_id', // Foreign key on countries Event...
-            'sport_id' // Foreign key on users League...
-        );
+        
+        $result =  $this->hasOne('App\League','id','league_id')
+        ->join('sports', 'sports.id', '=', 'leagues.sport_id')
+        ->select(array('sports.name'));
+        
+        return $result;
     }
     
+    public function status(){
+        return $this->hasOne('App\EventStatus','id','event_status_id');
+    }
 
+    public function odds(){
+        return $this->hasMany('App\Odd','event_id');
+    }
+   
     public function league(){
-        return $this->hasOne('App\League','id','league_id');  
+        return $this->belongsTo('App\League');
     }
     
 }

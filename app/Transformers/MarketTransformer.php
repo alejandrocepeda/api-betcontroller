@@ -17,7 +17,7 @@ class MarketTransformer extends TransformerAbstract
         return [
             'id'        => (int)$market->id,
             'name'      => (string)$market->name,
-            'odds'      => $market->odds
+            'status'    => (string)$market->status->name,
         ];
     }
 }

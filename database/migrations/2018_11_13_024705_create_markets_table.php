@@ -16,6 +16,8 @@ class CreateMarketsTable extends Migration
         Schema::create('markets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',100)->nullable(false);
+            $table->integer('market_status_id')->default(1);
+            $table->string('description',255)->nullable(true);
             $table->timestamps();
             $table->unique(array('id','name'));
         });

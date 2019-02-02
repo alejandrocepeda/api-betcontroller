@@ -30,6 +30,17 @@ class LocationController extends ApiController
     public function create()
     {
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
         $rules = [
             'name'  => 'required|max:100'
         ];
@@ -42,26 +53,13 @@ class LocationController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Location $location)
     {
-        //
-        $location = Location::findOrFail($id);
         return $this->showOne($location);
     }
 
@@ -83,9 +81,22 @@ class LocationController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Location $location)
     {
-        //
+        $rules = [
+            'name'  => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        $location->fill($request->all());
+        if ($location->isClean()) {
+            return $this->errorResponse('At least one different value must be specified to update', 422);
+        }
+        
+        $location->save();
+
+        return $this->successResponse(['data' => $location, 'message' => 'Location Updated'],201);
     }
 
     /**
@@ -94,8 +105,9 @@ class LocationController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Location $location)
     {
-        //
+        $location->delete();   
+        return $this->successResponse(['data' => $location, 'message' => 'Location Deleted'], 201);
     }
 }

@@ -9,14 +9,18 @@ class Odd extends Model
 {
     //
     protected $fillable = [
-        'name',
-        'market_id'
+        'value','event_id','market_id','bet_id'
     ];
+
     protected $hidden = ['created_at','updated_at']; 
 
     public $transformer = OddTransformer::class;
 
+    public function bets(){
+        return $this->hasMany('App\Bet','id'); 
+    }
+
     public function markets(){
-        return $this->hasOne('App\Market','id','market_id'); 
+        return $this->hasMany('App\Market','id'); 
     }
 }
