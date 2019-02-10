@@ -16,8 +16,8 @@ class EventTransformer extends TransformerAbstract
      * @return array
      */
     public function transform(Event $event)
-    {
-        
+    {   
+
         $return = [
             'id'           => (int)$event->id,
             'name'         => (string)$event->name,
@@ -26,16 +26,16 @@ class EventTransformer extends TransformerAbstract
             'leagueName'   => (!isset($event->league->name) ? null : $event->league->name),
             'sportName'    => (!isset($event->sport->name) ? null : $event->sport->name),
             'status'       => (string)$event->status->name,
-            'markets'      => $this->getMarkets($event)
+            'markets'      => $this->_transformMarkets($event)
         ];
         
         return $return;
     }
 
-    public function getMarkets($event){
+    private function _transformMarkets($event){
 
         $markets = Market::all(array('id','name'));
-        $results = array();
+        $results = collect();
 
         foreach($markets as $market){
             
@@ -46,7 +46,7 @@ class EventTransformer extends TransformerAbstract
 
             if (!$odds->isEmpty()){
 
-                $eventMarketOdd = array();
+                $eventMarketOdd = collect();
 
                 foreach($odds as $odd){
 
@@ -56,25 +56,24 @@ class EventTransformer extends TransformerAbstract
 
                     if ($bet){
 
-                        $eventMarketOdd[] = array(
+                        $eventMarketOdd->push([
                             'id'            => (int)$odd->id,
                             'betName'       => (string)$bet->name,
                             'betId'         => (int)$bet->id,
                             'value'         => (double)$odd->value,
                             'specialValue'  => (double)$odd->special_value
-                        );
+                        ]);
                     }
                 }
 
-                $results[] = array(
+                $results->push([
                     'id'    => (int)$market->id,
                     'name'  => (string)$market->name,
-                    'odds'  => (array)$eventMarketOdd
-                );
+                    'odds'  => $eventMarketOdd
+                ]);
             }
         }
         
-       
         return $results;
     }
 

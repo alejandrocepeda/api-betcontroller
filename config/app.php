@@ -151,6 +151,7 @@ return [
          * Package Service Providers...
          */
         Spatie\Fractal\FractalServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
         /*
          * Application Service Providers...
          */

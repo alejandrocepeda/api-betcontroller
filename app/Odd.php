@@ -16,11 +16,11 @@ class Odd extends Model
 
     public $transformer = OddTransformer::class;
 
-    public function bets(){
-        return $this->hasMany('App\Bet','id'); 
+    public function bet(){
+        return $this->hasOne('App\Bet','id','bet_id'); 
     }
 
-    public function markets(){
-        return $this->hasMany('App\Market','id'); 
+    public function market(){
+        return $this->hasOne('App\Market','id','market_id'); 
     }
 }

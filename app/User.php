@@ -7,10 +7,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
+    use HasRoles;
     
     /**
      * The attributes that are mass assignable.
@@ -31,4 +33,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token','created_at','updated_at','email_verified_at'
     ];
+
+    public function bookmakers()
+    {
+        return $this->hasMany('App\BookmakerUser','user_id')
+            ->select(array('bookmakers.name','bookmaker_users.bookmaker_id'))
+            ->join('bookmakers','bookmakers.id','bookmaker_users.bookmaker_id');
+    }
+   
 }

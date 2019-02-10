@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Validator;
 
+use Spatie\Permission\Traits\HasRoles;
+
 class PassportController extends ApiController
 {
+    use HasRoles;
+    
     public $successStatus = 200;
 
     public function login(Request $request)

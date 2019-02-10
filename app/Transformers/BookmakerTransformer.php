@@ -16,9 +16,20 @@ class BookmakerTransformer extends TransformerAbstract
         $return = [
             'id'        => (int)$bookmaker->id,
             'name'      => (string)$bookmaker->name,
-            'status'    => (string)$bookmaker->status->name
+            'status'    => (string)$bookmaker->status->name,
+            'users'     => $this->_transformUsers($bookmaker->users)
         ];
         
         return $return;
+    }
+
+    private function _transformUsers($users){
+        
+        return $users->transform(function($item, $key) {
+            return [
+                'id'            => (int)$item->id,
+                'name'          => (string)$item->name
+            ];
+        });
     }
 }

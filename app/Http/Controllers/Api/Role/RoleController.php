@@ -1,45 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Api\Sport;
+namespace App\Http\Controllers\Api\Role;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Sport;
+use App\Role;
 
-class SportController extends ApiController
+class RoleController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
-        //
-        $sports = Sport::all();
-        return $this->showAll($sports);
-    }
-
-    public function getGuzzleRequest(Request $request)
-    {
-       
-        if (!isset($request->id)){
-            $request->id = 0;
-        }
-        
-        $url = 'http://winnerbetweb.net/HandlerQt.ashx?IDPalinsesto='.$request->id.'&IDRaggruppamento=0&FiltroVis=all&method=OddsRaggr';
-
-        $client = new \GuzzleHttp\Client();
-        $request = $client->get($url,[
-            'headers' => [
-                'Accept-Language' => 'en-EN,es;q=0.9'
-            ]
-        ]);
-
-        $response =  json_decode($request->getBody()->getContents(), true);
-       
-        return $response;
+        $roles = Role::all();
+        return $this->showAll($roles);
     }
 
     /**
@@ -62,14 +39,14 @@ class SportController extends ApiController
     {
         //
         $rules = [
-            'name' => 'required|max:100',
+            'name'          => 'required|max:100|min:4',
         ];
-
+        
         $this->validate($request, $rules);
 
-        $sport = Sport::create($request->all());
+        $role = Role::create(['name' => $request->name]);
 
-        return $this->successResponse(['data'=> $sport, 'message' => 'Sport Created'], 201);
+        return $this->successResponse(['data' => $role, 'message' => 'Role Created'], 201);
     }
 
     /**
@@ -78,9 +55,9 @@ class SportController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Sport $sport)
+    public function show(Role $role)
     {
-        return $this->showOne($sport);
+        return $this->showOne($role);
     }
 
     /**
@@ -101,23 +78,22 @@ class SportController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sport $sport)
+    public function update(Request $request, Role $role)
     {
-        //
         $rules = [
-            'name'  => 'required',
+            'name'  => 'max:100|min:4',
         ];
 
         $this->validate($request, $rules);
 
-        $sport->fill($request->all());
-        if ($sport->isClean()) {
+        $role->fill($request->all());
+        if ($role->isClean()) {
             return $this->errorResponse('At least one different value must be specified to update', 422);
         }
         
-        $sport->save();
+        $role->save();
 
-        return $this->successResponse(['data' => $sport, 'message' => 'Sport Updated'],201);
+        return $this->successResponse(['data' => $role, 'message' => 'Role updated'],201);
     }
 
     /**
@@ -126,9 +102,9 @@ class SportController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sport $sport)
+    public function destroy(Role $role)
     {
-        $sport->delete();
-        return $this->successResponse(['data' => $sport, 'message' => 'Sport Deleted'], 201);
+        $role->delete();
+        return $this->successResponse(['data' => $role, 'message' => 'Role Deleted'], 201);
     }
 }

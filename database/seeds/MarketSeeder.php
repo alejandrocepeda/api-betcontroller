@@ -75,6 +75,52 @@ class MarketSeeder extends Seeder
                 'id'                => 7,
                 'name'              => 'First Goal',
                 'market_status_id'  => 1
+            ],
+            [
+                'id'                => 8,
+                'name'              => '2nd Half Result',
+                'market_status_id'  => 1
+            ],
+            [
+                'id'                => 9,
+                'name'              => '2nd Half Under/Over',
+                'market_status_id'  => 1
+            ],
+            [
+                'id'                => 10,
+                'name'              => 'GG/NG',
+                'market_status_id'  => 1
+            ],
+            [
+                'id'                => 11,
+                'name'              => 'Double Chance',
+                'market_status_id'  => 1
+            ],
+            [
+                'id'                => 12,
+                'name'              => '1X2 2nd HT + Over/Under',
+                'market_status_id'  => 1
+            ],
+            [
+                'id'                => 13,
+                'name'              => 'Odd/Even',
+                'market_status_id'  => 1
+            ],
+            [
+                'id'                => 14,
+                'name'              => '1st Half - Odd/Even',
+                'market_status_id'  => 1
+            ],
+            [
+                'id'                => 15,
+                'name'              => '2nd Half - Odd/Even',
+                'market_status_id'  => 1
+            ]
+            ,
+            [
+                'id'                => 16,
+                'name'              => 'Double Chance 1st Half',
+                'market_status_id'  => 1
             ]
         );
 

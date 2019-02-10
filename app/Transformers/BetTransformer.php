@@ -16,6 +16,7 @@ class BetTransformer extends TransformerAbstract
         return [
             'id'           => (int)$bet->id,
             'name'         => (string)$bet->name,
+            'marketId'     => (int)$bet->market_id,
             'marketName'   => (string)$bet->market->name
         ];
     }
