@@ -4,24 +4,19 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEventsTable extends Migration
+class CreateUserStatusesTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('user_statuses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100)->nullable(false);
-            $table->integer('event_status_id')->default(1);
-            $table->timestamp('date_time');
-            $table->integer('league_id');
+            $table->string('name');
             $table->timestamps();
-            $table->unique(array('id','name'));
         });
     }
 
@@ -32,6 +27,6 @@ class CreateEventsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('user_statuses');
     }
 }

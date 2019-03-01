@@ -13,15 +13,19 @@ class EventController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-
-    //public $relationships = ['league'];
+   
 
     public function index(Request $request)
     {
-        //
+        /*
+        $events = Event::jsonPaginate();
+        return response()->json(['data' =>$events]);
+        */
 
-        $events = Event::all();
-        return $this->showAll($events);
+        $model = $this->setDateFilterEvent(Event::class);
+
+        $events =  $model->get();
+        return $this->showAll($events);        
     }
 
     /**

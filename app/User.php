@@ -34,6 +34,10 @@ class User extends Authenticatable
         'password', 'remember_token','created_at','updated_at','email_verified_at'
     ];
 
+    public function status(){
+        return $this->hasOne('App\UserStatus','id','user_status_id');
+    }
+    
     public function bookmakers()
     {
         return $this->hasMany('App\BookmakerUser','user_id')

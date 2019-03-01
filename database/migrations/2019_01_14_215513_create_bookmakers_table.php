@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
-class CreateBookmakerTable extends Migration
+     
+class CreateBookmakersTable extends Migration
 {
     /**
      * Run the migrations.

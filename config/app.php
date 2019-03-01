@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'America/Caracas',
+    'timezone' => 'America/Bogota',
 
     /*
     |--------------------------------------------------------------------------
@@ -152,6 +152,7 @@ return [
          */
         Spatie\Fractal\FractalServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class,
         /*
          * Application Service Providers...
          */

@@ -53,7 +53,6 @@ class UserController extends ApiController
 
         $token  =  $user->createToken('MyApp')->accessToken;
         $user['token'] = $token;
-        $user->assignRole('User');
 
         return $this->successResponse(['data'=> $user, 'message'=>'User Created'], 201);
     }

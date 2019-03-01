@@ -22,7 +22,7 @@ class PermissionMiddleware
      */
     public function handle($request, Closure $next)
     {
-
+        
         $user = auth()->user();
         
         $permission = Route::currentRouteName();
@@ -30,6 +30,7 @@ class PermissionMiddleware
         if (!$user->hasRole('Admin') and !$user->can($permission)){
             return $this->errorResponse('User have not permission for the resource '.$permission,201);
         }
+        
         
         return $next($request);
     }

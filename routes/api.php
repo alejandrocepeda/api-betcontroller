@@ -13,10 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('login', 'Api\Passport\PassportController@login')->name('login');
 
 //Route::group(['prefix' => 'v1'], function () {
-
-	Route::post('login', 'Api\Passport\PassportController@login')->name('login');
+Route::group(['middleware' => ['auth:api','permission']], function () {
+	
 	Route::post('register', 'Api\User\UserController@register')->name('register');
 
 	Route::resource('events','Api\Event\EventController');
@@ -32,5 +33,5 @@ use Illuminate\Http\Request;
 	Route::resource('odds', 'Api\Odd\OddController');
 	Route::resource('bets', 'Api\Bet\BetController');
 	
-//});
+});
 

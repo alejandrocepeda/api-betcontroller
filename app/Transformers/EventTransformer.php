@@ -79,12 +79,10 @@ class EventTransformer extends TransformerAbstract
 
     public function parseDateTime($value)
     {   
-       
-        $timeZone = config('app.timezone');
-       
+        $value = strtotime($value);
+        
         return Carbon::createFromTimestamp($value)
-            ->timezone($timeZone)
             ->format('Y-m-d H:i'); 
-        ;
+        
     }
 }
