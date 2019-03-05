@@ -23,7 +23,10 @@ Route::group(['middleware' => ['auth:api','permission']], function () {
 	Route::resource('events','Api\Event\EventController');
 	Route::resource('leagues', 'Api\League\LeagueController');
 	Route::resource('users', 'Api\User\UserController');
-	Route::resource('users.roles', 'Api\User\UserRoleController');
+	//Route::resource('users.roles', 'Api\User\UserRoleController');
+
+	Route::put('users/{user}/roles', 'Api\User\UserRoleController@syncRoles');
+	
 
 	Route::resource('roles', 'Api\Role\RoleController');
 	Route::resource('sports', 'Api\Sport\SportController');
