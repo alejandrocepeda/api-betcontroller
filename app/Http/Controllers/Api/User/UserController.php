@@ -104,8 +104,9 @@ class UserController extends ApiController
         }
         
         $user->fill($request->all());
+        
         if ($user->isClean()) {
-            return $this->errorResponse('At least one different value must be specified to update', 422);
+            return $this->successResponse(['data' => $user, 'message' => 'At least one different value must be specified to update'],201);
         }
         
         $user->save();

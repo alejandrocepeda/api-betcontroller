@@ -15,7 +15,8 @@ class CreateBookmakersTable extends Migration
     {
         Schema::create('bookmakers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable(false);
+            $table->string('name',100)->nullable(false);
+            $table->integer('bookmaker_status_id')->default(1);
             $table->timestamps();
         });
     }
