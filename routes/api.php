@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth:api','permission']], function () {
 	//Route::resource('users.roles', 'Api\User\UserRoleController');
 
 	Route::put('users/{user}/roles', 'Api\User\UserRoleController@syncRoles');
+	Route::resource('users.bookmakers', 'Api\User\UserBookmakerController')->only(['update']);
 	
 
 	Route::resource('roles', 'Api\Role\RoleController');
