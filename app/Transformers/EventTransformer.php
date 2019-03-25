@@ -25,7 +25,7 @@ class EventTransformer extends TransformerAbstract
             'leagueId'     => (int)$event->league_id,
             'leagueName'   => (!isset($event->league->name) ? null : $event->league->name),
             'sportName'    => (!isset($event->sport->name) ? null : $event->sport->name),
-            'status'       => (string)$event->status->name,
+            'status'       => $event->status,
             'markets'      => $this->_transformMarkets($event)
         ];
         

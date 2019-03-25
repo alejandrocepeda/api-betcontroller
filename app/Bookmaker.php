@@ -12,7 +12,7 @@ class Bookmaker extends Model
     protected $hidden = ['created_at','updated_at']; 
 
     protected $fillable = [
-        'name','id'
+        'name','id','bookmaker_status_id'
     ];
 
     public function status(){

@@ -26,12 +26,16 @@ Route::group(['middleware' => ['auth:api','permission']], function () {
 
 	Route::put('users/{user}/roles', 'Api\User\UserRoleController@syncRoles');
 	Route::resource('users.bookmakers', 'Api\User\UserBookmakerController')->only(['update']);
+	Route::resource('user-statuses', 'Api\User\UserStatusController');
 	
 
 	Route::resource('roles', 'Api\Role\RoleController');
 	Route::resource('sports', 'Api\Sport\SportController');
 	Route::resource('locations', 'Api\Location\LocationController');
+	
 	Route::resource('bookmakers', 'Api\Bookmaker\BookmakerController');
+	Route::resource('bookmaker-statuses', 'Api\Bookmaker\BookmakerStatusController');
+
 	Route::resource('markets', 'Api\Market\MarketController');
 	Route::resource('odds', 'Api\Odd\OddController');
 	Route::resource('bets', 'Api\Bet\BetController');

@@ -17,7 +17,7 @@ class UserTransformer extends TransformerAbstract
         $return = [
             'id'            => (int)$user->id,
             'name'          => (string)$user->name,
-            'status'        => (string)$user->status->name,
+            'status'        => $user->status,
             'email'         => (string)$user->email,
             'bookmakers'    => $this->_transformBookmakers($user->bookmakers),
             'roles'         => $this->_transformRoles($user->roles),
@@ -26,8 +26,6 @@ class UserTransformer extends TransformerAbstract
 
         return $return;
     }
-
-    
 
     private function _transformRoles($roles){
         
@@ -53,11 +51,9 @@ class UserTransformer extends TransformerAbstract
 
     private function _transformBookmakers($bookmakers){
         
-        return $bookmakers->transform(function($item, $key) {
-            return [
-                'id'            => (int)$item->bookmaker_id,
-                'name'          => (string)$item->name
-            ];
-        });
+        return [
+            'id'            => (int)$bookmakers->bookmaker_id,
+            'name'          => (string)$bookmakers->name
+        ];
     }
 }

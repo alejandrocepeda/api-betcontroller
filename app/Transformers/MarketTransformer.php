@@ -18,7 +18,7 @@ class MarketTransformer extends TransformerAbstract
         return [
             'id'        => (int)$market->id,
             'name'      => (string)$market->name,
-            'status'    => (string)$market->status->name,
+            'status'    => $market->status,
             'bets'      => $this->_transformBets($market->bets)
         ];
     }

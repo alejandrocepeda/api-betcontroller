@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','user_status_id'
     ];
 
     public $transformer = UserTransformer::class;
@@ -40,7 +40,7 @@ class User extends Authenticatable
     
     public function bookmakers()
     {
-        return $this->hasMany('App\BookmakerUser','user_id')
+        return $this->hasOne('App\BookmakerUser','user_id')
             ->select(array('bookmakers.name','bookmaker_users.bookmaker_id'))
             ->join('bookmakers','bookmakers.id','bookmaker_users.bookmaker_id');
     }

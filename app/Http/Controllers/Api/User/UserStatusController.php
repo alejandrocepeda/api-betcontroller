@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Bookmaker;
+namespace App\Http\Controllers\Api\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Bookmaker;
+use App\UserStatus;
 
-class BookmakerController extends ApiController
+class UserStatusController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class BookmakerController extends ApiController
     public function index()
     {
         //
-        $bookmaker = Bookmaker::all();
-        return $this->showAll($bookmaker);
+        $userstatuses = UserStatus::all();
+        return $this->showAll($userstatuses);
     }
 
     /**
@@ -39,15 +39,6 @@ class BookmakerController extends ApiController
     public function store(Request $request)
     {
         //
-        $rules = [
-            'name' => 'required|max:100',
-        ];
-        
-        $this->validate($request, $rules);
-
-        $bookmaker = Bookmaker::create($request->all());
-
-        return $this->successResponse(['data' => $bookmaker, 'message' => 'Bookmaker Created'], 201);
     }
 
     /**
@@ -56,10 +47,9 @@ class BookmakerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Bookmaker $Bookmaker)
+    public function show($id)
     {
         //
-        return $this->showOne($Bookmaker);
     }
 
     /**
@@ -80,23 +70,9 @@ class BookmakerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bookmaker $bookmaker)
+    public function update(Request $request, $id)
     {
-        $rules = [
-            'name'  => 'required',
-        ];
-
-        $this->validate($request, $rules);
-
-        $bookmaker->fill($request->all());
-        if ($bookmaker->isClean()) {
-            
-            return $this->successResponse(['data' => $bookmaker, 'message' => 'At least one different value must be specified to update'],201);
-        }
-        
-        $bookmaker->save();
-
-        return $this->successResponse(['data' => $bookmaker, 'message' => 'Bookmaker updated'],201);
+        //
     }
 
     /**
@@ -105,9 +81,8 @@ class BookmakerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bookmaker $bookmaker)
+    public function destroy($id)
     {
-        $bookmaker->delete();   
-        return $this->successResponse(['data' => $bookmaker, 'message' => 'Bookmaker Deleted'], 201);
+        //
     }
 }
