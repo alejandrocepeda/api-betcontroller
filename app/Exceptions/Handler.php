@@ -58,6 +58,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
 
+        
         if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
             return $this->errorResponse('User have not permission for this page access.',201);
         }

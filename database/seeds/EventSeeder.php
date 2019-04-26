@@ -68,8 +68,8 @@ class EventSeeder extends Seeder
 
     public function Events(){
 
-        $datetime = Carbon::now()->addHour(5)->timestamp; 
-
+        $datetime = Carbon::now()->addHour(5); //->timestamp; 
+       
         $event = Event::create([
             'id'                => 1,
             'name'              => 'Dallas Mavericks - Toronto Raptors',

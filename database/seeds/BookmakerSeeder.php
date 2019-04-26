@@ -38,15 +38,15 @@ class BookmakerSeeder extends Seeder
         ]);
     }
     
-    public function MarketStatus()
+    public function BookmakerStatus()
     {
         
-        MarketStatus::create([
+        BookmakerStatus::create([
             'id'        => 1,
             'name'     => 'Active'
         ]);
 
-        MarketStatus::create([
+        BookmakerStatus::create([
             'id'        => 2,
             'name'     => 'Inactive'
         ]);
