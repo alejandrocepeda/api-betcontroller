@@ -13,6 +13,7 @@ class BetTransformer extends TransformerAbstract
      */
     public function transform(Bet $bet)
     {
+        
         return [
             'id'            => (int)$bet->id,
             'name'          => (string)$bet->name,

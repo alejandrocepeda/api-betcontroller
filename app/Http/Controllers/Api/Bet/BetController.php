@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Bet;
 
+
 class BetController extends ApiController
 {
     /**
@@ -13,12 +14,14 @@ class BetController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
+    
+    
+
     public function index()
     {
-        //
-        $bet = Bet::all();
-
-        return $this->showAll($bet); 
+        $bets = Bet::all();     
+        
+        return $this->showAll($bets); 
     }
 
     /**
