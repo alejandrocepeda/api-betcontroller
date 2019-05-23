@@ -19,7 +19,7 @@ class PassportController extends ApiController
 
     public function login(Request $request)
     {
-        //
+        
         $rules = ['email'    => 'required|email',
                   'password' => 'required|string|min:6', ];
 

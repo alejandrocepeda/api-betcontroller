@@ -19,8 +19,19 @@ class BetController extends ApiController
 
     public function index()
     {
-        $bets = Bet::all();     
+       
+        $bets = Bet::all();
+
+        /*
+        $bets = Bet::select(['id','name']);
+        $count = $bets->select(\DB::raw('count(*) AS total'))->limit(1);
+        $bets = Bet::select(['id','name']);    
+
         
+        return response()->json(['count' => $count->get(),'originalData' => $bets->get()]);
+        */
+        
+
         return $this->showAll($bets); 
     }
 
