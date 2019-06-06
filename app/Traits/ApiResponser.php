@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 
+use App\Traits\FilterQuery;
+
 trait ApiResponser{
+
+    use FilterQuery;
 
     protected function successResponse($data,$code){
         return response()->json($data,$code);
@@ -17,43 +21,61 @@ trait ApiResponser{
         return response()->json(['error' => $mesaage,'code' => $code],$code);
     }
 
-    public function paginate(Collection $collection){
-        if (request()->has('pagination') && 'true' == request()->pagination){
-            
-            $rules = ['per_page' => 'integer|min:2|max:100'];
-            Validator::validate(request()->all(), $rules);
-            $perPage        = (request()->has('per_page') ? request()->per_page : 5);
-            $page           = LengthAwarePaginator::resolveCurrentPage();
-            $offset         = (($page-1)*$perPage);
-
-            $results = $collection->slice(($page - 1) * $perPage, $perPage)->values();
-
-            $paginated = new LengthAwarePaginator($results, $collection->count(), $perPage, $page, 
-                [
-                    'path'  => LengthAwarePaginator::resolveCurrentPath()
-                ]
-            );
-            
-            $paginated->appends(request()->all());
-
-            return $paginated;
-        }
+    protected function paginate($collection){
         
-        return $collection;
+        $page    = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = request()->has('per_page') ? request()->per_page : 10;
+        $results = $collection->slice(($page - 1) * $perPage, $perPage)->values();
+
+        $paginated = new LengthAwarePaginator($results, $collection->count(), $perPage, $page, ['path' => LengthAwarePaginator::resolveCurrentPath()]);
+        $paginated->appends(request()->all());
+
+        return $paginated;
     }
 
-    protected function showAll(Collection $collection,$code = 200){
+    private function preparePaginate($paginated){
 
+        return [
+                'data'       => isset($paginated['data']) ? $paginated['data'] : [],
+                'pagination' => [
+                    'total'         => isset($paginated['total']) ? $paginated['total'] : 0,
+                    'current_page'  => isset($paginated['current_page']) ? $paginated['current_page'] : 0,
+                    'per_page'      => isset($paginated['per_page']) ? $paginated['per_page'] : 0,
+                    'from'          => isset($paginated['from']) ? $paginated['from'] : 0,
+                    'to'            => isset($paginated['to']) ? $paginated['to'] : 0,
+                    'last_page'     => isset($paginated['last_page']) ? $paginated['last_page'] : 0,
+                    'prev_page_url' => isset($paginated['prev_page_url']) ? $paginated['prev_page_url'] : 0,
+                    'next_page_url' => isset($paginated['next_page_url']) ? $paginated['next_page_url'] : 0,
+                    'path'          => isset($paginated['path']) ? $paginated['path'] : 0,
+                ]
+            ];  
+    }
+
+    protected function showAll($collection,$code = 200){
+
+        $collection = $this->search_data($collection);
+        
         if ($collection->isEmpty()){
-            return $this->successResponse(['data' => $collection],$code);
+            if (request()->has('pagination') && 'false' == request()->pagination) {
+                return $this->successResponse(['data' => $collection],$code);
+            }
+            else{
+                return $this->successResponse($this->preparePaginate($collection),$code);
+            }
         }
         
-        $collection =  $this->paginate($collection);
+        if (request()->has('pagination') && 'false' == request()->pagination) {
+            return $this->successResponse($collection, $code);            
+        }
 
-        $transformer = $collection->first()->transformer;
-        $collection = $this->transformData($collection, $transformer);
+        $paginated = $this->paginate($collection);
 
-        return $this->successResponse($collection,$code);
+        $transformer = $paginated->first()->transformer;
+        $collection = $this->transformData($paginated, $transformer);
+        
+        $paginated = collect($paginated);
+        
+        return $this->successResponse($this->preparePaginate($paginated), $code);  
     }
 
     public function showOne(Model $model,$code = 200){

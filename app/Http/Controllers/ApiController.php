@@ -10,6 +10,7 @@ class ApiController extends Controller
 {
     //
     use ApiResponser;
+    
     use DateFilterEventTrait;
     /*
     public function __construct(Request $request) 

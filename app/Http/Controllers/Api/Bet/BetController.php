@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Bet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Bet;
-
+//use Illuminate\Support\Collection;
 
 class BetController extends ApiController
 {
@@ -21,15 +21,20 @@ class BetController extends ApiController
     {
        
         $bets = Bet::all();
-
-        /*
-        $bets = Bet::select(['id','name']);
-        $count = $bets->select(\DB::raw('count(*) AS total'))->limit(1);
-        $bets = Bet::select(['id','name']);    
-
         
-        return response()->json(['count' => $count->get(),'originalData' => $bets->get()]);
+        /*
+        $results = collect();
+
+        foreach($bets as $bet){
+            $results->push([
+                'id'    => $bet->id,
+                'name'  => $bet->name,
+                'tipo'  => 1
+            ]);
+        }
         */
+        
+        
         
 
         return $this->showAll($bets); 
