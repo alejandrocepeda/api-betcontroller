@@ -20,22 +20,7 @@ class BetController extends ApiController
     public function index()
     {
        
-        $bets = Bet::all();
-        
-        /*
-        $results = collect();
-
-        foreach($bets as $bet){
-            $results->push([
-                'id'    => $bet->id,
-                'name'  => $bet->name,
-                'tipo'  => 1
-            ]);
-        }
-        */
-        
-        
-        
+        $bets = Bet::all(); 
 
         return $this->showAll($bets); 
     }
